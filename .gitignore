@@ -1,0 +1,16 @@
+/solrj/target/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+
+### VS Code ###
+.vscode/
+
+### Logs ###
+/logs/
+/solrj/logs/
+/.idea/
