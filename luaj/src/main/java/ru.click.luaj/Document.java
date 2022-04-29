@@ -46,7 +46,7 @@ public class Document {
     public String getValue(String key) {
         List<String> values = attributes.get(key);
         if (values == null) return null;
-        if (values.size() > 0) return values.get(0);
+        if (!values.isEmpty()) return values.get(0);
         return null;
     }
 
