@@ -1,4 +1,4 @@
-function handle(document)
+function handle(document, logger)
     print(document:getId())
     print(document:getAttributes())
     attr = document:getAttributes()
@@ -13,6 +13,8 @@ function handle(document)
     print(document:save("C:\\click\\lua\\1.txt"))
     print(document:save("H:\\g.txt"))
     save(document,"C:\\click\\lua\\2.txt")
+
+    logger:info("Hello from script")
 end
 
 function save(document, path)

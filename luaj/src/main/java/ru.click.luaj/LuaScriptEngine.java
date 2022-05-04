@@ -18,6 +18,7 @@ import java.io.FileReader;
 import java.io.Reader;
 import java.net.URL;
 
+
 @Slf4j
 public class LuaScriptEngine {
 
@@ -34,11 +35,13 @@ public class LuaScriptEngine {
             script.eval(bindings);
 
             Document doc = new Document();
+            LuaLogger logger = new LuaLogger();
 
             LuaFunction handle = (LuaFunction) bindings.get("handle");
             LuaValue luaDoc = CoerceJavaToLua.coerce(doc);
+            LuaValue luaLog = CoerceJavaToLua.coerce(logger);
 
-            LuaValue result = handle.call(luaDoc);
+            LuaValue result = handle.call(luaDoc, luaLog);
 
             log.info("Function result: {}", result);
             log.info("Doc: {}", doc);
