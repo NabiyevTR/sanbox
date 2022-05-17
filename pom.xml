@@ -11,6 +11,7 @@
     <modules>
         <module>solrj</module>
         <module>luaj</module>
+        <module>tess4j</module>
     </modules>
 
     <dependencies>
