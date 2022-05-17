@@ -1,0 +1,1 @@
+Document(id=doc_id_lua, rootId=doc_root_id, fileDest=/var/exchange/file.txt, attributes={attr_4=[value_4_1], attr_3=[value_3_1, value_3_2, lua_lua], attr_2=[value_2_1, value_2_2, value_2_3], attr_1=[value_1_1]})
