@@ -1,5 +1,3 @@
-/solrj/target/
-
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -14,3 +12,12 @@
 /logs/
 /solrj/logs/
 /.idea/
+
+### Tess4j ###
+/tess4j/target/
+
+### Solrj ###
+/solrj/target/
+
+### Tika ###
+/solrj/tika/
