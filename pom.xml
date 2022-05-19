@@ -12,6 +12,7 @@
         <module>solrj</module>
         <module>luaj</module>
         <module>tess4j</module>
+        <module>tika</module>
     </modules>
 
     <dependencies>
