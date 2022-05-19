@@ -14,8 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -42,8 +41,8 @@ public class tess4j {
 
     public static void main(String[] args) {
 
-
-       // ocrSkewImages();
+        getAngles();
+        // ocrSkewImages();
 
         //getRotatedImages();
         // getDeSkewImages();
@@ -51,7 +50,36 @@ public class tess4j {
         // detectCriticalAngle();
         //  psm1Test();
         //  psm3Test();
-         psm3WithImageRotation();
+        // psm3WithImageRotation();
+    }
+
+    private static void getAngles() {
+        Path rotatedImagesPath = Paths.get(resourcePath.toString(), "images_rotated_by_tess");
+
+        Map<Double, Double> angleMap = new TreeMap<>();
+
+        try (Stream<Path> paths = Files.walk(Paths.get(rotatedImagesPath.toString()))) {
+            paths.forEach(path -> {
+                TessService tessService = new TessService();
+                try {
+                    double calcAngle = tessService.getAngle(path);
+                    double angle = Double.parseDouble(
+                            removeFileExtension(path.getFileName().toString(), true).replaceFirst("im_", "")
+                    );
+
+                    angleMap.put(angle, calcAngle);
+
+                } catch (IOException e) {
+                    log.error("Error getting angle for file '{}'", path, e);
+                }
+            });
+        } catch (IOException e) {
+            log.error("Error getting files", e);
+        }
+
+        angleMap.forEach((angle, calcAngle) -> {
+            log.info("Angle: {}, Calculated angle: {}, Threshold: {}", angle, calcAngle, angle+calcAngle);
+        });
     }
 
     private static void ocrSkewImages() {
