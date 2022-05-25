@@ -14,6 +14,7 @@ import java.nio.file.Path;
 public class TessService {
 
     private final ITesseract tesseract = new Tesseract();
+
     private String language = "rus+eng";
     private String dataPath = "C:/click/TikaDocExtractor/tessdata";
 

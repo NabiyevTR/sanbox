@@ -4,6 +4,7 @@ import com.recognition.software.jdeskew.ImageDeskew;
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.TesseractException;
 import net.sourceforge.tess4j.util.ImageHelper;
+import org.apache.commons.io.FilenameUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -15,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -39,9 +41,10 @@ public class tess4j {
         );
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        getAngles();
+       // ocrTypeWriter();
+      //  getAngles();
         // ocrSkewImages();
 
         //getRotatedImages();
@@ -51,6 +54,45 @@ public class tess4j {
         //  psm1Test();
         //  psm3Test();
         // psm3WithImageRotation();
+    }
+
+    private static void ocrTypeWriter() throws IOException {
+
+        Path typewriterImagePath = Paths.get(resourcePath.toString(), "typewriter");
+
+        // get files
+
+        List<Path> filePaths;
+
+
+        try (Stream<Path> paths = Files.walk(Paths.get(typewriterImagePath.toString()))) {
+            filePaths = paths.filter(p -> !FilenameUtils.getExtension(p.toString()).equalsIgnoreCase(".txt"))
+                    .collect(Collectors.toList());
+        }
+
+        filePaths.forEach(fp -> {
+
+            try {
+                TessService tessService = new TessService();
+                String ocrResult = tessService.doOcr(fp);
+                Path output = Paths.get(
+                        fp.getParent().toString(),
+                        removeFileExtension(fp.getFileName().toString() ,true) + ".txt"
+                );
+
+                Files.write(
+                        output,
+                        ocrResult.getBytes(StandardCharsets.UTF_8),
+                        StandardOpenOption.CREATE
+                );
+
+
+            } catch (TesseractException e) {
+                log.error("Cannot OCR file '{}'", fp, e);
+            } catch (IOException e) {
+                log.error("Cannot save OCR result to file.", e);
+            }
+        });
     }
 
     private static void getAngles() {
@@ -78,7 +120,7 @@ public class tess4j {
         }
 
         angleMap.forEach((angle, calcAngle) -> {
-            log.info("Angle: {}, Calculated angle: {}, Threshold: {}", angle, calcAngle, angle+calcAngle);
+            log.info("Angle: {}, Calculated angle: {}, Threshold: {}", angle, calcAngle, angle + calcAngle);
         });
     }
 
