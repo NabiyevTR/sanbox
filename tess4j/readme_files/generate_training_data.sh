@@ -1,0 +1,11 @@
+python3 ../tesstrain/src/training/tesstrain.py \
+--fonts_dir ../fonts \
+--fontlist Mistral \
+--lang rus \
+--linedata_only \
+--langdata_dir ../langdata_lstm \
+--tessdata_dir ../tessdata_best \
+--save_box_tiff \
+--maxpages 10 \
+--output_dir ../train \
+--tmp_dir ../tmp 
