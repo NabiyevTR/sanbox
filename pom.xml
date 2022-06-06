@@ -13,6 +13,7 @@
         <module>luaj</module>
         <module>tess4j</module>
         <module>tika</module>
+        <module>multithreading</module>
     </modules>
 
     <dependencies>
